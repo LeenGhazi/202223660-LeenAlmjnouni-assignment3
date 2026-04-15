@@ -196,11 +196,9 @@ async function fetchRepoLanguages(repo) {
 function createRepoCard(repo) {
   const complexity = getRepoComplexity(repo);
 
-  const languagesHTML = repo.languages.length
-    ? repo.languages
-        .map((lang) => `<span class="repo-tag">${lang}</span>`)
-        .join("")
-    : `<span class="repo-tag">No languages listed</span>`;
+  const languagesText = repo.languages.length
+  ? `Languages: ${repo.languages.join(", ")}`
+  : "Languages: Not specified";
 
   return `
     <article class="card project-card">
@@ -212,7 +210,7 @@ function createRepoCard(repo) {
       </div>
 
       <div class="repo-meta">
-        ${languagesHTML}
+        <span class="repo-tag">${languagesText}</span>
       </div>
 
       <a 
