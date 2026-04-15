@@ -284,6 +284,7 @@ section {
 /* preventing too layered sections */
 .project-card h3 { 
   margin: 6px 0 8px; font-size: 1.05rem; 
+  margin-bottom: 4px;
 }
 .project-card p { 
   margin: 0 0 12px; color: var(--muted); font-weight: 550; 
@@ -387,6 +388,20 @@ select:focus {
   background-color: #1e1e2f;
   color: #fff;
   border-color: #444;
+}
+/* Top stays natural */
+.repo-top {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Bottom is pushed down */
+.repo-bottom {
+  margin-top: auto; /* THIS is the magic */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 /* Skills */

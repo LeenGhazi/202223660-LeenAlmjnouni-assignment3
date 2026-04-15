@@ -195,10 +195,16 @@ function createRepoCard(repo) {
   : "Languages: Not specified";
 
   return `
-    <article class="card project-card">
+  <article class="card project-card">
+    
+    <!-- TOP -->
+    <div class="repo-top">
       <h3>${repo.name}</h3>
       <p>${repo.description || "No description available."}</p>
+    </div>
 
+    <!-- BOTTOM -->
+    <div class="repo-bottom">
       <div class="repo-meta">
         <span class="repo-tag">Complexity: ${complexity}</span>
       </div>
@@ -215,8 +221,10 @@ function createRepoCard(repo) {
       >
         View Repository
       </a>
-    </article>
-  `;
+    </div>
+
+  </article>
+`;
 }
 
 /*
