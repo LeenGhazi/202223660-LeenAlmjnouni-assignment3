@@ -11,6 +11,7 @@ My portfolio includes the following:
 - Main sections:
 	- About Me: A short description about me
 	- Projects: 3 projects I worked on
+	- Github Repositories: Project information I have uploaded in my GitHub account
 	- Skills: Professional and Programming skills
 	- Contact Form 
 - Responsive web design for mobile, tablet, and desktop users.
