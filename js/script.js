@@ -153,36 +153,54 @@ const repoSort = document.getElementById("repoSort");
 
 let githubReposData = [];
 
+/*
+  MANUAL COMPLEXITY MAP
+  Write each repository name exactly as it appears on GitHub.
+  Change beginner/advanced however you want.
+*/
+const repoComplexityMap = {
+  "202223660-LeenAlmjnouni-assignment1": "beginner",
+  "202223660-LeenAlmjnouni-assignment2": "beginner",
+  "202223660-LeenAlmjnouni-assignment3": "advanced",
+  "Navi-KFUPM": "advanced",
+  "6-4-express-request-data": "advanced",
+  "7-1-mongodb-LeenGhazi-1": "advanced",
+  "6-2-npm-node-LeenGhazi": "beginner",
+  "demo_1.1_hello_web": "beginner"
+};
+
+// categorize a repo as beginner by default
 function getRepoComplexity(repo) {
-  const text = `
-    ${repo.name || ""}
-    ${repo.description || ""}
-    ${repo.language || ""}
-  `.toLowerCase();
-
-  const advancedKeywords = [
-    "react",
-    "node",
-    "express",
-    "mongodb",
-    "mongo",
-    "api",
-    "backend",
-    "machine learning",
-    "data science",
-    "forecast",
-    "lstm",
-    "arima",
-    "database",
-    "vite"
-  ];
-
-  const isAdvanced = advancedKeywords.some((keyword) => text.includes(keyword));
-  return isAdvanced ? "advanced" : "beginner";
+  return repoComplexityMap[repo.name] || "beginner";
 }
 
+//  Fetch all languages used in one repository
+
+async function fetchRepoLanguages(repo) {
+  try {
+    const response = await fetch(repo.languages_url);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch languages");
+    }
+
+    const languagesData = await response.json();
+    return Object.keys(languagesData);
+  } catch (error) {
+    console.error(`Language fetch failed for ${repo.name}:`, error);
+    return [];
+  }
+}
+
+// repository card
 function createRepoCard(repo) {
   const complexity = getRepoComplexity(repo);
+
+  const languagesHTML = repo.languages.length
+    ? repo.languages
+        .map((lang) => `<span class="repo-tag">${lang}</span>`)
+        .join("")
+    : `<span class="repo-tag">No languages listed</span>`;
 
   return `
     <article class="card project-card">
@@ -190,9 +208,11 @@ function createRepoCard(repo) {
       <p>${repo.description || "No description available."}</p>
 
       <div class="repo-meta">
-        <span class="repo-tag">Language: ${repo.language || "Not specified"}</span>
-        <span class="repo-tag">Stars: ${repo.stargazers_count}</span>
         <span class="repo-tag">Complexity: ${complexity}</span>
+      </div>
+
+      <div class="repo-meta">
+        ${languagesHTML}
       </div>
 
       <a 
@@ -207,22 +227,23 @@ function createRepoCard(repo) {
   `;
 }
 
+/*
+  Filter + sort repos
+*/
 function getProcessedRepos() {
   let repos = [...githubReposData];
 
   const selectedComplexity = repoComplexityFilter.value;
   const selectedSort = repoSort.value;
 
+  // Filter only by beginner / advanced
   if (selectedComplexity !== "all") {
     repos = repos.filter((repo) => getRepoComplexity(repo) === selectedComplexity);
   }
 
-  if (selectedSort === "updated") {
-    repos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-  } else if (selectedSort === "name") {
+  // Sort only by name
+  if (selectedSort === "name") {
     repos.sort((a, b) => a.name.localeCompare(b.name));
-  } else if (selectedSort === "stars") {
-    repos.sort((a, b) => b.stargazers_count - a.stargazers_count);
   }
 
   return repos;
@@ -260,7 +281,19 @@ async function loadGitHubRepos() {
 
     const repos = await response.json();
 
-    githubReposData = repos.filter((repo) => !repo.fork);
+   const ownRepos = repos.filter((repo) => !repo.fork);
+
+    const reposWithLanguages = await Promise.all(
+      ownRepos.map(async (repo) => {
+        const languages = await fetchRepoLanguages(repo);
+        return {
+          ...repo,
+          languages
+        };
+      })
+    );
+
+    githubReposData = reposWithLanguages;
 
     repoStatus.textContent = "Repositories loaded successfully.";
     renderGitHubRepos();
