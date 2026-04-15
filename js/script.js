@@ -146,19 +146,13 @@ function showGreetingOnly(name) {
 /* =========================
    Fetch Data from Github API
 ========================= */
-// Elements
 const githubReposGrid = document.getElementById("githubReposGrid");
 const repoStatus = document.getElementById("repoStatus");
 const repoComplexityFilter = document.getElementById("repoComplexityFilter");
 const repoSort = document.getElementById("repoSort");
 
-// Store fetched repos in memory
 let githubReposData = [];
 
-/* 
-  Decide repository complexity using simple logic.
-  This is the "complex logic" part for Assignment 3.
-*/
 function getRepoComplexity(repo) {
   const text = `
     ${repo.name || ""}
@@ -173,7 +167,6 @@ function getRepoComplexity(repo) {
     "mongodb",
     "mongo",
     "api",
-    "full stack",
     "backend",
     "machine learning",
     "data science",
@@ -185,14 +178,9 @@ function getRepoComplexity(repo) {
   ];
 
   const isAdvanced = advancedKeywords.some((keyword) => text.includes(keyword));
-
   return isAdvanced ? "advanced" : "beginner";
 }
 
-/*
-  Build one repo card.
-  Reuses project-card style so it matches the Projects section.
-*/
 function createRepoCard(repo) {
   const complexity = getRepoComplexity(repo);
 
@@ -219,21 +207,16 @@ function createRepoCard(repo) {
   `;
 }
 
-/*
-  Apply filter + sorting to repository data
-*/
 function getProcessedRepos() {
   let repos = [...githubReposData];
 
   const selectedComplexity = repoComplexityFilter.value;
   const selectedSort = repoSort.value;
 
-  // Filter by complexity
   if (selectedComplexity !== "all") {
     repos = repos.filter((repo) => getRepoComplexity(repo) === selectedComplexity);
   }
 
-  // Sort repos
   if (selectedSort === "updated") {
     repos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
   } else if (selectedSort === "name") {
@@ -245,9 +228,6 @@ function getProcessedRepos() {
   return repos;
 }
 
-/*
-  Render repos to the page
-*/
 function renderGitHubRepos() {
   if (!githubReposGrid) return;
 
@@ -266,18 +246,13 @@ function renderGitHubRepos() {
   githubReposGrid.innerHTML = repos.map(createRepoCard).join("");
 }
 
-/*
-  Fetch repos from GitHub API
-*/
 async function loadGitHubRepos() {
   if (!repoStatus || !githubReposGrid) return;
 
   repoStatus.textContent = "Loading repositories...";
 
   try {
-    const response = await fetch(
-      "https://api.github.com/users/LeenGhazi/repos?sort=updated&per_page=100"
-    );
+    const response = await fetch("https://api.github.com/users/LeenGhazi/repos?sort=updated&per_page=100");
 
     if (!response.ok) {
       throw new Error("GitHub API request failed");
@@ -285,21 +260,17 @@ async function loadGitHubRepos() {
 
     const repos = await response.json();
 
-    // Remove forked repos so your own work is shown more clearly
     githubReposData = repos.filter((repo) => !repo.fork);
 
     repoStatus.textContent = "Repositories loaded successfully.";
     renderGitHubRepos();
   } catch (error) {
-    repoStatus.textContent =
-      "Sorry, GitHub repositories could not be loaded right now.";
+    console.error("GitHub fetch error:", error);
+    repoStatus.textContent = "Sorry, GitHub repositories could not be loaded right now.";
     githubReposGrid.innerHTML = "";
   }
 }
 
-/*
-  Re-render whenever controls change
-*/
 if (repoComplexityFilter) {
   repoComplexityFilter.addEventListener("change", renderGitHubRepos);
 }
@@ -308,3 +279,6 @@ if (repoSort) {
   repoSort.addEventListener("change", renderGitHubRepos);
 }
 
+window.addEventListener("DOMContentLoaded", () => {
+  loadGitHubRepos();
+});
