@@ -367,7 +367,12 @@ select {
 
   padding-right: 35px; /* space for arrow */
 }
-
+.repo-controls select,
+.repo-controls option {
+  font-family: inherit;
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+}
 /* Hover */
 select:hover {
   border-color: var(--primary);
