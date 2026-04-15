@@ -1,0 +1,452 @@
+/* =========================
+   THEME (Light/Dark)
+========================= */
+/* Light Theme */
+:root {
+  --bg: #f3ece6;        
+  --surface: #faf5f0;   
+  --text: #0f172a;
+  --muted: #475569;
+  --border: #e4d8cf;
+  --primary: #5a5353;
+  --primary-2: #a07178;
+  --accent: #d1b5a6;
+  --shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+  --radius: 18px;
+}
+/* Dark Theme */
+html[data-theme="dark"] {
+  --bg: #0b0b0b;        
+  --surface: #151515;   
+  --text: #f5f5f5;      
+  --muted: #a1a1a1;   
+  --border: #2a2a2a;   
+  --primary: #5a5353;  
+  --primary-2: #a07178;
+  --accent: #e6ccbe;   
+  --shadow: 0 12px 35px rgba(0, 0, 0, 0.8);
+}
+
+
+/* =========================
+   HEADER STYLE SETUP
+========================= */
+html { 
+  scroll-behavior: smooth; 
+}
+* { 
+  box-sizing: border-box; 
+}
+
+
+/* =========================
+   BODY STYLE SETUP
+========================= */
+/* main page style */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background:
+  radial-gradient(1200px 600px at 20% 0%, rgba(230, 204, 190, 0.15), transparent 60%),
+  radial-gradient(900px 500px at 90% 10%, rgba(191, 160, 143, 0.12), transparent 55%),
+  var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+/* link style */
+a { 
+  color: inherit; text-decoration: none; 
+}
+/* page style */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+/* container style (for sections) */
+.container {
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+}
+
+
+/* =========================
+   NAVIGATION BAR 
+========================= */
+/* navigation bar style (top of the page) */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  border-bottom: 1px solid var(--border);
+}
+/* inner-navigation bar style (the items inside the main bar) */
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 0;
+}
+/* name header style (in the navigation bar) */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+/* sub-name header style (in the navigation bar) */
+.brand-sub {
+  font-weight: 650;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+/* navigation bar style (for the jump-to page and change the theme buttons) */
+.nav-links {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.nav-links a {
+  padding: 8px 10px;
+  border-radius: 12px;
+  color: var(--muted);
+  border: 1px solid transparent;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.nav-links a:hover {
+  color: var(--text);
+  border-color: var(--border);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  transform: translateY(-2px);
+}
+/* navigation bar 'buttons' style  */
+.btn {
+  display: inline-block;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 9px 12px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: transform 0.08s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.btn:hover {
+  transform: translateY(-2px);
+}
+.btn:active { 
+  transform: scale(0.98); 
+}
+.btn.primary {
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  color: white;
+}
+/* theme button style  */
+.btn.ghost { background: transparent; }
+/* mobile style for the page size (very important) */
+@media (max-width: 650px) {
+  .nav-inner { flex-direction: column; align-items: stretch; }
+  .nav-links { justify-content: center; }
+}
+
+
+/* =========================
+   SECTIONS (about me, projects, skills, contact)
+========================= */
+/* main sections style  */
+section { 
+    padding: 34px 0;
+    scroll-margin-top: 70px; 
+}
+/* box style for each section */
+.card {
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+/* outter box style (for about me and quick info)  */
+.section-card {
+  border-radius: var(--radius);
+  padding: 0;       
+  background: transparent;
+  box-shadow: none;
+}
+/* headings style inside the card class  */
+.section-title {
+  margin: 0 0 8px;
+  font-size: clamp(1.3rem, 1.2rem + 1vw, 1.9rem);
+  letter-spacing: -0.2px;
+}
+.subtitle {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 0;
+}
+/* grid style for the 'about me and quick info' sections  */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 16px;
+  align-items: stretch;
+}
+/* mobile style for the section style (very important) */
+@media (max-width: 900px) {
+  .about-grid { grid-template-columns: 1fr; }
+}
+/* name style */
+.hero-title {
+  margin: 4px 0 10px;
+  font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem);
+  line-height: 1.15;
+}
+.hero-title span {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* paragraph style in the 'about me' section */
+.contact-mini p {
+  margin: 10px 0;
+  color: var(--muted);
+  font-weight: 600;
+  word-break: break-word;
+}
+.mini-title { 
+  margin-bottom: 6px; 
+}
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 16px 0;
+}
+
+/* Projects section style */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+/* Project border style */
+#projects .project-card {
+  border: 1px solid var(--border);
+}
+/* Image container */
+.img-box {
+  width: 70%;
+  aspect-ratio: 1 / 1; 
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+}
+/* Image itself */
+.img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+/* style each project in the main project container */
+.project-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.project-card:hover {
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  border-color: var(--border);
+  box-shadow: var(--shadow);
+}
+/* image style inside each project section */
+.project-card .img-box {
+  margin-top: auto;  
+  margin-left: auto; 
+  margin-right: auto;
+}
+/* mobile style for the project section style (very important) */
+@media (max-width: 1000px) { .grid-3 { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 650px) { .grid-3 { grid-template-columns: 1fr; } }
+/* preventing too layered sections */
+.project-card h3 { 
+  margin: 6px 0 8px; font-size: 1.05rem; 
+}
+.project-card p { 
+  margin: 0 0 12px; color: var(--muted); font-weight: 550; 
+}
+.inner-card { 
+  box-shadow: none; 
+}
+
+/* Skills */
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+#skills .inner-card {
+  border: 1px solid var(--border);
+}
+/* mobile style for the skills section style (very important) */
+@media (max-width: 850px) { .skills-grid { grid-template-columns: 1fr; } }
+.inner-title { 
+  margin: 0 0 8px; 
+}
+/* style each skill in a chip (for each professional and programming skills */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+.chip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  font-weight: 650;
+  color: var(--muted);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.chip:hover {
+  transform: translateY(-2px);
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+/* Contact form style */
+.form { 
+  display: grid; gap: 12px; 
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+/* mobile style for the contact section style (very important) */
+@media (max-width: 650px) { .form-row { grid-template-columns: 1fr; } }
+/* label style for the contact form */
+label {
+  display: grid;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--muted);
+}
+/* input style in the contact form section */
+input, textarea {
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-size: 1rem;
+}
+/* contact form style */
+input:focus, textarea:focus {
+  border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 18%, transparent);
+}
+input.error, textarea.error {
+  border-color: #a62828;
+}
+/* style the status message after sending it */
+.form-status {
+  margin: 0;
+  font-weight: 700;
+  color: var(--muted);
+  min-height: 1.2em;
+}
+/* highlight section when jump-to-page is activated in the navigation bar  */
+:target .section-card {
+  outline: 3px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  outline-offset: 6px;
+  animation: fadeHighlight 2s ease-out forwards;
+}
+@keyframes fadeHighlight {
+  0%   { outline-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+  70%  { outline-color: color-mix(in srgb, var(--accent) 20%, transparent); }
+  100% { outline-color: transparent; }
+}
+
+/* =========================
+   POP-UP STYLE
+========================= */
+/* Overlay (blur background) */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(8px);
+  background: color-mix(in srgb, var(--bg) 70%, transparent);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  pointer-events: all;
+  transition: 0.5s;
+}
+body.overlay-active {
+  overflow: hidden; /* prevents scrolling */
+}
+body.overlay-active *:not(#overlay):not(#overlay *) {
+  pointer-events: none;
+}
+
+/* Smooth fade */
+#overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Popup box */
+.popup-box {
+  background: var(--surface);
+  color: var(--text);
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 400px;   /* increase width */
+  max-width: 90%; /* keeps it responsive on small screens */
+}
+
+/* Popup input */
+.popup-box input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

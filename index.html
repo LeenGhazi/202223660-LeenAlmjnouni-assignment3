@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- my header here -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leen Ghazi | Portfolio</title>
+    <!-- linking my css and js files here-->
+    <link rel="stylesheet" href="css/styles.css"/>
+    <script src="js/script.js" defer></script>
+
+</head>
+
+<!-- my body here -->
+<body>
+  <!-- navigation bar (for the name and the buttons to jump down to a specific section) -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <div class="brand">
+        <div>
+          Leen Ghazi
+          <div class="brand-sub">Portfolio</div>
+        </div>
+      </div>
+      <!-- buttons are here -->
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+        <button id="themeToggle" class="btn ghost" type="button" aria-label="Toggle theme">
+          🌙 Theme
+        </button>
+        
+      </nav>
+    </div>
+  </header>
+
+
+  <!-- SECTION 1: About me -->
+  <section id="about">
+    <div class="container">
+      <div class="card section-card"> <!-- to combine about me and quick info together -->
+        <div class="about-grid">
+          <div class="card">
+            <!-- my 'about me' sub-section -->
+            <h2 class="hero-title">Hey there, I am <span>Leen Ghazi</span></h2>
+            <p>
+              I am a computer science student who has the potential to boost their academic and professional career.
+              Very interested in my university major and plans to be a data scientist. I enjoy working on projects
+              that involve data analysis, machine learning, and software development. I am an excellent problem solver,
+              team leader, planner, and time manager, and open to applying all my knowledge to solve real-life problems.
+            </p>
+          </div>
+
+          <!-- my 'quick info' sub-section -->
+          <aside class="card contact-mini">
+            <h2 class="section-title mini-title">Quick info</h2>
+            <p class="subtitle">University: King Fahad University for Petroleum and Minerals</p>
+            <p class="subtitle">Department: Information and Computer Science</p>
+            <p class="subtitle">Major: Computer Science</p>
+            <div class="divider"></div>
+            <a class="btn primary" href="#contact">Message</a>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SECTION 2: Projects -->
+  <section id="projects">
+    <div class="container">
+        <div class="card">
+          <h2 class="section-title">Projects</h2>
+          <p class="subtitle">A few things I have built / worked on.</p>
+          <div class="grid-3">
+            <!-- Project 1:  Salary Prediction Classification -->
+            <article class="card project-card inner-card">
+              <h3>Project 1: Salary Prediction Classification</h3>
+              <p>
+                A data science and machine learning project that classifies salary ranges (&gt; 50k annually) based on
+                personal and professional attributes. Examines 3 models (Decision Tree, Random Forest, Naive Bayes).
+              </p>
+              <div class="img-box">
+                <img src="assets/images/project1.png" alt="Salary Prediction Classification Project">
+              </div>
+            </article>
+            <!-- Project 2:  Peruke Game -->
+            <article class="card project-card inner-card">
+              <h3>Project 2: Peruke Game</h3>
+              <p>
+                A multiplayer strategy game developed using Python and Tkinter. Two players use dice-based mechanics and
+                6 discs each. Focus on game logic, UI design, and interactive gameplay.
+              </p>
+              <div class="img-box">
+                <img src="assets/images/project2.png" alt="Peruke Game Project">
+              </div>
+            </article>
+            <!-- Project 3:  Crime Forecasting (LA) -->
+            <article class="card project-card inner-card">
+              <h3>Project 3: Crime Forecasting in Los Angeles</h3>
+              <p>
+                Research on analysing and forecasting crime trends in Los Angeles using time series analysis.
+                Uses ARIMA, SARIMA, and LSTM to predict future crime rates and evaluate trends.
+              </p>
+              <div class="img-box">
+                <img src="assets/images/project3.png" alt="Crime Forecasting Project">
+              </div>
+            </article>
+          </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: Skills -->
+  <section id="skills">
+    <div class="container">
+      <div class="card">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills-grid">
+          <!-- subsection 1: Professional Skills -->
+          <div class="card inner-card">
+            <h3 class="inner-title">Professional Skills</h3>
+            <div class="chips">
+              <span class="chip">Problem Solving</span>
+              <span class="chip">Time Management</span>
+              <span class="chip">Presentation Skills</span>
+              <span class="chip">Research Skills</span>
+            </div>
+          </div>
+          <!-- subsection 2: Programming Skills -->
+          <div class="card inner-card">
+            <h3 class="inner-title">Programming Skills</h3>
+            <div class="chips">
+              <span class="chip">Java</span>
+              <span class="chip">Python</span>
+              <span class="chip">C/C++</span>
+              <span class="chip">R</span>
+              <span class="chip">SQL</span>
+              <span class="chip">HTML</span>
+              <span class="chip">CSS</span>
+              <span class="chip">JavaScript</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: Contacts -->
+  <section id="contact">
+    <div class="container">
+      <div class="card">
+        <h2 class="section-title">Contact</h2>
+        <p class="subtitle">Send me a message.</p>
+        <form id="contactMeForm" class="form" novalidate>
+          <!-- name and email -->
+          <div class="form-row">
+            <label> Name <input id="nameInput" type="text" name="name" required placeholder="Your full name" /></label>
+            <label> Email <input type="email" name="email" required placeholder="example@email.com" /></label>
+          </div>
+          <!-- message and send -->
+          <label> Message <textarea name="message" rows="6" required placeholder="Write your message here..."></textarea></label>
+          <button class="btn primary" type="submit">Send</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+  
+  <!-- blur the page before name input in the pop-up page -->
+  <div id="overlay">
+  <div class="popup-box">
+    <!-- ask user for name -->
+    <h2 id="popup-text">Welcome to Leen's Portfolio <br> Please enter your name</h2>
+    <input type="text" id="popup-name" placeholder="Your name">
+    <!-- submit user name and save it in the local storage -->
+    <button class="btn primary" onclick="handleName()">Submit</button>
+  </div>
+</div>
+
+</body>
+</html>
+
