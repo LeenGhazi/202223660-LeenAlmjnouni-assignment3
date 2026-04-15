@@ -153,20 +153,14 @@ const repoSort = document.getElementById("repoSort");
 
 let githubReposData = [];
 
-/*
-  MANUAL COMPLEXITY MAP
-  Write each repository name exactly as it appears on GitHub.
-  Change beginner/advanced however you want.
-*/
+//  MANUAL COMPLEXITY MAP, for the sake of this project, i will categorize some of my projects to advanced manually
 const repoComplexityMap = {
-  "202223660-LeenAlmjnouni-assignment1": "beginner",
-  "202223660-LeenAlmjnouni-assignment2": "beginner",
   "202223660-LeenAlmjnouni-assignment3": "advanced",
+  "Crime-Forecasting-in-Los-Angeles": "advanced",
   "Navi-KFUPM": "advanced",
-  "6-4-express-request-data": "advanced",
-  "7-1-mongodb-LeenGhazi-1": "advanced",
-  "6-2-npm-node-LeenGhazi": "beginner",
-  "demo_1.1_hello_web": "beginner"
+  "Salary-Prediction-Classification": "advanced",
+  "Face_Lite": "advanced",
+  "Peruke_Game": "advanced",
 };
 
 // categorize a repo as beginner by default
