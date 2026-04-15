@@ -292,6 +292,55 @@ section {
   box-shadow: none; 
 }
 
+/* GitHub Repositories section style */
+/* Controls above the repo cards */
+.repo-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* Make controls responsive */
+@media (max-width: 650px) {
+  .repo-controls {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Same card style, just a little extra spacing */
+#github-repos .project-card {
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Metadata row inside each repository card */
+.repo-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  margin-bottom: 10px;
+}
+
+.repo-tag {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  font-weight: 650;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Link button inside each repo card */
+.repo-link {
+  margin-top: auto;
+  width: fit-content;
+}
+
 /* Skills */
 .skills-grid {
   display: grid;
