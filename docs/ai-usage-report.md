@@ -48,6 +48,8 @@ Working on this assignments taught me the following:
 - Using localStorage correctly in saving the Theme and user name entered before.
 - Visualizing difference styles and rules override especially in changing the page theme and button styles.
 - Verifying AI generating codes and analyse the result instead of copying the entire code.
+- Fetching data from GitHub 
+
 
 ## Responsible Use & Modifications
 
