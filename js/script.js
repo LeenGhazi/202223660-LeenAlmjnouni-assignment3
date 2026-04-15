@@ -175,7 +175,7 @@ async function fetchRepoLanguages(repo) {
     const response = await fetch(repo.languages_url);
 
     if (!response.ok) {
-      throw new Error("Failed to fetch languages");
+      throw new Error(`GitHub API request failed: ${response.status}`);;
     }
 
     const languagesData = await response.json();
