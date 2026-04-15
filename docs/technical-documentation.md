@@ -27,7 +27,7 @@ HTML is used to structure the website content such as sections, headings, paragr
 - images and image containers
 - anchor links for navigation
 
-### 1.2 CSS3
+### 1.2 CSS
 CSS is mainly for visualizing the appearance and layout of the website. Main elements used:
 - Flexbox for vertical and horizontal alignment
 - CSS Grid for project layout
@@ -44,6 +44,7 @@ JavaScript is used for interactivity and dynamic functionalities. Main elements 
 - Contact form feedback (layout only)
 - Use localStorage for saving Theme preferences and saving user name.
 - Use Popup page to ask the user for their name and greet them.
+- Use Cache to save GitHub fetched information.
 
 
 ## 2. Folder Structure
@@ -107,11 +108,16 @@ The website is divided into main sections:
   - Description
   - Image preview
 
-### 3.5 Skills Section
+### 3.5 GitHub Reposiroties
+- Displaying all my Github projects in cards
+- Filter feature for the projects complexity level (Beginner and Advanced) 
+- Sort feature based on the name or last update
+
+### 3.6 Skills Section
 - Organized into 2 categories: Professional and Programming skills
 - Using chip-style elements
 
-### 3.6 Contact Section
+### 3.7 Contact Section
 - Fields used: Name, Email, Message
 - 'No backend connection'
 
@@ -138,6 +144,9 @@ Each`.img-box` container ensures:
 -   No backend processing
 -	Validate user input when empty/incorrect input is submitted.
 
+### 5.3 API 
+-	Use GitHub repository information
+-	Use Cache to prevet multiple API requests
 
 ## 6. Accessibility Features
 
@@ -155,6 +164,7 @@ Several techniques were used to improve the overall performance and layout:
 -   Optimized image sizes in each image container    
 -   Minimal JavaScript usage (for now)
 -   Avoidance of unnecessary animations
+-	Use Cache to prevent multiple API requests.
 
 
 ## 8. Testing and Validation
