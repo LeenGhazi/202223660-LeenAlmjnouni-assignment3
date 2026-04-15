@@ -272,6 +272,20 @@ async function loadGitHubRepos() {
 
   repoStatus.textContent = "Loading repositories...";
 
+  // ===== CACHE CHECK =====
+  const cachedData = localStorage.getItem("githubRepos");
+  const cachedTime = localStorage.getItem("githubReposTime");
+
+  const now = Date.now();
+  const cacheDuration = 1000 * 60 * 10; // 10 minutes
+
+  if (cachedData && cachedTime && now - cachedTime < cacheDuration) {
+    githubReposData = JSON.parse(cachedData);
+    repoStatus.textContent = "Loaded from cache.";
+    renderGitHubRepos();
+    return;
+  }
+
   try {
     const response = await fetch("https://api.github.com/users/LeenGhazi/repos?sort=updated&per_page=100");
 
@@ -294,6 +308,10 @@ async function loadGitHubRepos() {
     );
 
     githubReposData = reposWithLanguages;
+
+    // ===== SAVE CACHE =====
+    localStorage.setItem("githubRepos", JSON.stringify(githubReposData));
+    localStorage.setItem("githubReposTime", Date.now());
 
     repoStatus.textContent = "Repositories loaded successfully.";
     renderGitHubRepos();
