@@ -113,7 +113,46 @@
     </div>
   </section>
 
-  <!-- SECTION 3: Skills -->
+  <!-- SECTION 3: Github Repositories -->
+   <section id="github-repos">
+      <div class="container">
+        <div class="section-card">
+          <div class="card">
+            <h2 class="section-title">GitHub Repositories</h2>
+            <p class="subtitle">
+              Live repositories fetched from my GitHub profile.
+            </p>
+
+            <!-- Logic controls for repositories -->
+            <div class="repo-controls">
+              <label for="repoComplexityFilter">
+                Repository Complexity
+                <select id="repoComplexityFilter">
+                  <option value="all">All</option>
+                  <option value="beginner">Beginner</option>
+                  <option value="advanced">Advanced</option>
+                </select>
+              </label>
+
+              <label for="repoSort">
+                Sort By
+                <select id="repoSort">
+                  <option value="updated">Last Updated</option>
+                  <option value="name">Name (A-Z)</option>
+                  <option value="stars">Stars</option>
+                </select>
+              </label>
+            </div>
+
+            <p id="repoStatus" class="form-status">Loading repositories...</p>
+
+            <div id="githubReposGrid" class="grid-3"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- SECTION 4: Skills -->
   <section id="skills">
     <div class="container">
       <div class="card">
@@ -148,7 +187,7 @@
     </div>
   </section>
 
-  <!-- SECTION 4: Contacts -->
+  <!-- SECTION 5: Contacts -->
   <section id="contact">
     <div class="container">
       <div class="card">
