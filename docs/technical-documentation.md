@@ -11,11 +11,12 @@ Here, I documented all my work in this assignment:
 * [8. Testing and Validation](#8-testing-and-validation)
 * [9. GitHub Control](#9-github-control)
 
-Note: the following features are added to what has been built in assignment 1.
-1. Dynamic Content: First, greet the user by their name and based on the time of the day. Second, switch between sections using the button on the navigation bar placed at the top of the website.
-2. Data Handling:Using localStorage to save user name and their theme preferences.
-3. Animation and Transitions: Button hover and shadow effects.
-4. Error Handling:Validate user input and send messaeg if the input is empty/invalid.
+Note: the following features are added to what has been built in assignment 1 and 2.
+
+1. API Integration: Adding "Fetching" my GitHub repositories information and display them on my web page (https://github.com/LeenGhazi).
+2. Complex Logic: in the github repositories I displayed, a filteration and sort features were added to the web page.
+3. State Management: Saving theme option and username similar to assignment 2.
+4. Performance: using a cache for the information used from my GitHub to avoid multiple API requests.
 
 
 ## 1. Technologies Used
