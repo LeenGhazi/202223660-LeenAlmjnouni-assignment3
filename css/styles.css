@@ -352,6 +352,7 @@ select {
   color: var(--text);
   font-size: 0.95rem;
   cursor: pointer;
+  font-family: inherit;
 
   /* Remove default ugly styles */
   appearance: none;
@@ -383,6 +384,8 @@ select:focus {
   flex-direction: column;
   gap: 6px;
   font-weight: 600;
+  font-family: inherit;
+  color: var(--text);
 }
 [data-theme="dark"] select {
   background-color: #1e1e2f;
