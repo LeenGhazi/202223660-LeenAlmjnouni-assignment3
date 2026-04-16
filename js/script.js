@@ -90,60 +90,6 @@ form.addEventListener("submit", (e) => {
 
 
 /* =========================
-   POPUP GREETING 
-========================= */
-// loading the name saved in the local storage and showing the greeting if the name is found, 
-// otherwise show the popup to ask for the name
-window.onload = function () {
-  const savedName = localStorage.getItem("username");
-  document.body.classList.add("overlay-active");
-  const input = document.getElementById("popup-name");
-  const button = document.querySelector(".popup-box button");
-  if (savedName) {
-    input.style.display = "none";
-    button.style.display = "none";
-    showGreetingOnly(savedName);
-  }
-};
-// show a greeting message based on the time of the day + the name of the user saved already in the local storage
-function getGreeting(name) {
-  const hour = new Date().getHours();
-  let message = "";
-  if (hour < 12) message = "Good morning";
-  else if (hour < 18) message = "Good afternoon";
-  else message = "Good evening";
-  return `${message}, ${name} 👋`;
-}
-// fetch the username from the localStorage + show the greeting message + hide the popup box after 2.5 seconds
-function handleName() {
-  const input = document.getElementById("popup-name").value;
-  const text = document.getElementById("popup-text");
-  if (input === "") {
-    text.textContent = "❌ Please enter your name";
-    return;
-  }
-  localStorage.setItem("username", input);
-  text.textContent = getGreeting(input);
-  document.getElementById("popup-name").style.display = "none";
-  document.querySelector(".popup-box button").style.display = "none";
-  setTimeout(() => {
-    document.getElementById("overlay").classList.add("hidden");
-    document.body.classList.remove("overlay-active"); 
-}, 2500);
-}
-// this function is similar to the one above, but only used if the name is already saved in the local storage
-function showGreetingOnly(name) {
-  const text = document.getElementById("popup-text");
-  text.textContent = getGreeting(name);
-  document.getElementById("popup-name").style.display = "none";
-  document.querySelector(".popup-box button").style.display = "none";
-  setTimeout(() => {
-    document.getElementById("overlay").classList.add("hidden");
-    document.body.classList.remove("overlay-active"); 
-}, 2500);
-}
-
-/* =========================
    Fetch Data from Github API
 ========================= */
 const githubReposGrid = document.getElementById("githubReposGrid");
@@ -175,7 +121,7 @@ async function fetchRepoLanguages(repo) {
     const response = await fetch(repo.languages_url);
 
     if (!response.ok) {
-      throw new Error(`GitHub API request failed: ${response.status}`);;
+      throw new Error(`GitHub API request failed: ${response.status}`);
     }
 
     const languagesData = await response.json();
@@ -241,10 +187,12 @@ function getProcessedRepos() {
     repos = repos.filter((repo) => getRepoComplexity(repo) === selectedComplexity);
   }
 
-  // Sort only by name
-  if (selectedSort === "name") {
-    repos.sort((a, b) => a.name.localeCompare(b.name));
-  }
+  // Sort logic
+if (selectedSort === "name") {
+  repos.sort((a, b) => a.name.localeCompare(b.name));
+} else if (selectedSort === "updated") {
+  repos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+}
 
   return repos;
 }
@@ -274,7 +222,7 @@ async function loadGitHubRepos() {
 
   // ===== CACHE CHECK =====
   const cachedData = localStorage.getItem("githubRepos");
-  const cachedTime = localStorage.getItem("githubReposTime");
+  const cachedTime = Number(localStorage.getItem("githubReposTime"));
 
   const now = Date.now();
   const cacheDuration = 1000 * 60 * 10; // 10 minutes
@@ -290,7 +238,7 @@ async function loadGitHubRepos() {
     const response = await fetch("https://api.github.com/users/LeenGhazi/repos?sort=updated&per_page=100");
 
     if (!response.ok) {
-      throw new Error("GitHub API request failed");
+      throw new Error(`GitHub API request failed: ${response.status}`);
     }
 
     const repos = await response.json();
@@ -330,6 +278,68 @@ if (repoSort) {
   repoSort.addEventListener("change", renderGitHubRepos);
 }
 
+
+
+
+/* =========================
+   POPUP GREETING + LOADING GITHUB REPOS
+========================= */
+// loading the name saved in the local storage and showing the greeting if the name is found, 
+// otherwise show the popup to ask for the name
+// also, load the github repos in the same time to make sure they are ready when the user closes the popup
 window.addEventListener("DOMContentLoaded", () => {
+  const savedName = localStorage.getItem("username");
+  document.body.classList.add("overlay-active");
+
+  const input = document.getElementById("popup-name");
+  const button = document.querySelector(".popup-box button");
+
+  if (savedName) {
+    input.style.display = "none";
+    button.style.display = "none";
+    showGreetingOnly(savedName);
+  }
+
   loadGitHubRepos();
 });
+// show a greeting message based on the time of the day + the name of the user saved already in the local storage
+function getGreeting(name) {
+  const hour = new Date().getHours();
+  let message = "";
+  if (hour < 12) message = "Good morning";
+  else if (hour < 18) message = "Good afternoon";
+  else message = "Good evening";
+  return `${message}, ${name} 👋`;
+}
+// fetch the username from the localStorage + show the greeting message + hide the popup box after 2.5 seconds
+function handleName() {
+  const input = document.getElementById("popup-name").value;
+  const text = document.getElementById("popup-text");
+  if (input === "") {
+    text.textContent = "❌ Please enter your name";
+    return;
+  }
+  localStorage.setItem("username", input);
+  text.textContent = getGreeting(input);
+  document.getElementById("popup-name").style.display = "none";
+  document.querySelector(".popup-box button").style.display = "none";
+  setTimeout(() => {
+    document.getElementById("overlay").classList.add("hidden");
+    document.body.classList.remove("overlay-active"); 
+}, 2500);
+}
+// this function is similar to the one above, but only used if the name is already saved in the local storage
+function showGreetingOnly(name) {
+  const text = document.getElementById("popup-text");
+  text.textContent = getGreeting(name);
+  document.getElementById("popup-name").style.display = "none";
+  document.querySelector(".popup-box button").style.display = "none";
+  setTimeout(() => {
+    document.getElementById("overlay").classList.add("hidden");
+    document.body.classList.remove("overlay-active"); 
+}, 2500);
+}
+
+
+
+
