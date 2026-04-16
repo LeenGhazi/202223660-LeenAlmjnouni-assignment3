@@ -92,13 +92,12 @@ form.addEventListener("submit", (e) => {
 /* =========================
    Fetch Data from Github API
 ========================= */
+// get the elements related to the github repos section
 const githubReposGrid = document.getElementById("githubReposGrid");
 const repoStatus = document.getElementById("repoStatus");
 const repoComplexityFilter = document.getElementById("repoComplexityFilter");
 const repoSort = document.getElementById("repoSort");
-
 let githubReposData = [];
-
 //  MANUAL COMPLEXITY MAP, for the sake of this project, i will categorize some of my projects to advanced manually
 const repoComplexityMap = {
   "202223660-LeenAlmjnouni-assignment3": "advanced",
@@ -108,22 +107,18 @@ const repoComplexityMap = {
   "Face_Lite": "advanced",
   "Peruke_Game": "advanced",
 };
-
-// categorize a repo as beginner by default
+// categorize a repo as beginner by default so that only the specified projects above are advanced.
 function getRepoComplexity(repo) {
   return repoComplexityMap[repo.name] || "beginner";
 }
-
-//  Fetch all languages used in one repository
-
+//  Fetch all programming languages used in one repository
 async function fetchRepoLanguages(repo) {
   try {
     const response = await fetch(repo.languages_url);
-
     if (!response.ok) {
       throw new Error(`GitHub API request failed: ${response.status}`);
     }
-
+    // The API returns an object where keys are language names and values are bytes of code
     const languagesData = await response.json();
     return Object.keys(languagesData);
   } catch (error) {
@@ -131,15 +126,13 @@ async function fetchRepoLanguages(repo) {
     return [];
   }
 }
-
-// repository card
+// Create repository card structure
 function createRepoCard(repo) {
   const complexity = getRepoComplexity(repo);
-
+  // convert the language object to one string
   const languagesText = repo.languages.length
   ? `Languages: ${repo.languages.join(", ")}`
   : "Languages: Not specified";
-
   return `
   <article class="card project-card">
     
@@ -172,36 +165,29 @@ function createRepoCard(repo) {
   </article>
 `;
 }
-
-/*
-  Filter + sort repos
-*/
+// Filter + sort repos.
 function getProcessedRepos() {
   let repos = [...githubReposData];
-
+  // filter by complexity, sort by name or last update
   const selectedComplexity = repoComplexityFilter.value;
   const selectedSort = repoSort.value;
-
   // Filter only by beginner / advanced
   if (selectedComplexity !== "all") {
     repos = repos.filter((repo) => getRepoComplexity(repo) === selectedComplexity);
   }
-
-  // Sort logic
-if (selectedSort === "name") {
-  repos.sort((a, b) => a.name.localeCompare(b.name));
-} else if (selectedSort === "updated") {
-  repos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-}
-
+  // Sort options
+  if (selectedSort === "name") {
+    repos.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (selectedSort === "updated") {
+    repos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+  }
   return repos;
 }
-
+// rener repo information to the page.
 function renderGitHubRepos() {
   if (!githubReposGrid) return;
-
   const repos = getProcessedRepos();
-
+  // display this message if there is no result after filtering, otherwise show the repos cards
   if (!repos.length) {
     githubReposGrid.innerHTML = `
       <article class="card project-card">
@@ -211,40 +197,34 @@ function renderGitHubRepos() {
     `;
     return;
   }
-
   githubReposGrid.innerHTML = repos.map(createRepoCard).join("");
 }
-
+// load the repos from the github api, with caching and error handling
 async function loadGitHubRepos() {
   if (!repoStatus || !githubReposGrid) return;
-
   repoStatus.textContent = "Loading repositories...";
 
-  // ===== CACHE CHECK =====
+  // CACHE CHECK
   const cachedData = localStorage.getItem("githubRepos");
   const cachedTime = Number(localStorage.getItem("githubReposTime"));
-
   const now = Date.now();
-  const cacheDuration = 1000 * 60 * 10; // 10 minutes
-
+  // after 10 minutes, the cache will be considered expired and the data will be fetched again from the API
+  const cacheDuration = 1000 * 60 * 10; 
+  // if the data still valid, use it and render the repos without making an API call
   if (cachedData && cachedTime && now - cachedTime < cacheDuration) {
     githubReposData = JSON.parse(cachedData);
     repoStatus.textContent = "Loaded from cache.";
     renderGitHubRepos();
     return;
   }
-
+  // if not, fetch the data from the API, process it, save it to the cache, and then render it
   try {
     const response = await fetch("https://api.github.com/users/LeenGhazi/repos?sort=updated&per_page=100");
-
     if (!response.ok) {
       throw new Error(`GitHub API request failed: ${response.status}`);
     }
-
     const repos = await response.json();
-
-   const ownRepos = repos.filter((repo) => !repo.fork);
-
+    const ownRepos = repos.filter((repo) => !repo.fork);
     const reposWithLanguages = await Promise.all(
       ownRepos.map(async (repo) => {
         const languages = await fetchRepoLanguages(repo);
@@ -254,33 +234,27 @@ async function loadGitHubRepos() {
         };
       })
     );
-
     githubReposData = reposWithLanguages;
 
-    // ===== SAVE CACHE =====
+    // SAVE CACHE
     localStorage.setItem("githubRepos", JSON.stringify(githubReposData));
     localStorage.setItem("githubReposTime", Date.now());
-
     repoStatus.textContent = "Repositories loaded successfully.";
     renderGitHubRepos();
-  } catch (error) {
-    console.error("GitHub fetch error:", error);
-    repoStatus.textContent = "Sorry, GitHub repositories could not be loaded right now.";
-    githubReposGrid.innerHTML = "";
-  }
+    } catch (error) {
+      console.error("GitHub fetch error:", error);
+      repoStatus.textContent = "Sorry, GitHub repositories could not be loaded right now.";
+      githubReposGrid.innerHTML = "";
+    }
 }
+// Event listeners for filtering and sorting
 
 if (repoComplexityFilter) {
-  repoComplexityFilter.addEventListener("change", renderGitHubRepos);
-}
-
+  repoComplexityFilter.addEventListener("change", renderGitHubRepos);}
 if (repoSort) {
-  repoSort.addEventListener("change", renderGitHubRepos);
-}
+  repoSort.addEventListener("change", renderGitHubRepos);}
 
-
-
-
+  
 /* =========================
    POPUP GREETING + LOADING GITHUB REPOS
 ========================= */
