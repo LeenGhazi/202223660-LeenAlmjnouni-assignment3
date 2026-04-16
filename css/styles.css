@@ -293,8 +293,11 @@ section {
   box-shadow: none; 
 }
 
-/* GitHub Repositories section style */
-/* Controls above the repo cards */
+
+/* =========================
+   GITHUB REPOSITORY SECTIONS
+========================= */
+/* Controls above the repository (repo) cards */
 .repo-controls {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -309,11 +312,9 @@ section {
   }
 }
 
-/* Same card style, just a little extra spacing */
+/* Same card style, but the spacing is managed */
 #github-repos .project-card {
   border: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
   gap: 10px;
 }
 
@@ -336,66 +337,56 @@ section {
   font-size: 0.9rem;
 }
 
-/* Link button inside each repo card */
+/* Link button inside each repo card to take the user to the github link */
 .repo-link {
   margin-top: auto;
   width: fit-content;
 }
 
-/* github dropdown menu style*/
-select {
+/* github dropdown menu style for filtering and sorting */
+.repo-controls select {
   width: 100%;
   padding: 10px 14px;
+  padding-right: 35px;
   border-radius: 12px;
   border: 1px solid var(--border);
   background-color: var(--surface);
   color: var(--text);
   font-size: 0.95rem;
-  cursor: pointer;
   font-family: inherit;
-
-  /* Remove default ugly styles */
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
+  cursor: pointer;
   transition: 0.2s ease;
   background-image: url("data:image/svg+xml;utf8,<svg fill='%23646cff' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5.5 7l4.5 4 4.5-4'/></svg>");
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 16px;
-
-  padding-right: 35px; /* space for arrow */
+  
+  /* override the built-in select style */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
+
 .repo-controls select,
 .repo-controls option {
-  font-family: inherit;
-  background-color: var(--surface) !important;
+  font-family: inherit !important;
   color: var(--text) !important;
 }
-/* Hover */
 select:hover {
   border-color: var(--primary);
 }
-
-/* Focus (when clicked) */
 select:focus {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.2);
 }
+/* select labels */
 .repo-controls label {
   display: flex;
   flex-direction: column;
   gap: 6px;
   font-weight: 600;
-  font-family: inherit;
   color: var(--text);
-}
-[data-theme="dark"] select {
-  background-color: #1e1e2f;
-  color: #fff;
-  border-color: #444;
 }
 /* Top stays natural */
 .repo-top {
@@ -403,10 +394,9 @@ select:focus {
   flex-direction: column;
   gap: 8px;
 }
-
-/* Bottom is pushed down */
+/* Bottom is pushed down (for complexity and language info) */
 .repo-bottom {
-  margin-top: auto; /* THIS is the magic */
+  margin-top: auto;
   display: flex;
   flex-direction: column;
   gap: 8px;
